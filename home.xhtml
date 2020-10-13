@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html 	xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:ui="http://primefaces.org/ui">
+		
+		
+	<h:head>
+		<title> Rubrica Telefonica </title>
+	</h:head>
+	<h:body>
+		<h1> Benvenuto nella tua rubrica telefonica.</h1>
+	
+	
+	<h:form>
+		<ui:dataTable value="#{rubrica.elencoContatti}" var="elemento" id="tabella">
+		
+			<ui:column>
+				<f:facet name="header">
+					<h:outputText value="nome"></h:outputText>
+				</f:facet>
+				<h:outputText value="#{elemento.nome}"></h:outputText>
+			</ui:column>
+			
+			<ui:column>
+				<f:facet name="header">
+					<h:outputText value="cognome"></h:outputText>
+				</f:facet>
+				<h:outputText value="#{elemento.cognome}"></h:outputText>
+			</ui:column>
+				
+			<ui:column>
+				<f:facet name="header">
+					<h:outputText value="telefono"></h:outputText>
+				</f:facet>
+				<h:outputText value="#{elemento.telefono}"></h:outputText>
+			</ui:column>
+			
+			<ui:column>
+				<f:facet name="header">
+					<h:outputText value="email"></h:outputText>
+				</f:facet>
+				<h:outputText value="#{elemento.email}"></h:outputText>
+			</ui:column>
+		
+			<ui:column>
+					<f:facet name="header">Azioni</f:facet>
+					<ui:commandButton value="Cancella" actionListener="#{rubrica.cancella(elemento.id)}" update="tabella" />
+				</ui:column>
+				
+		</ui:dataTable>
+	</h:form>
+		
+		
+		
+		
+		<h:form id="inserimentoForm">
+			<ui:dialog widgetVar="inserimento" width="400" height="500" modal="true"> 
+			
+				<ui:panel>
+					<ui:messages style="color:red" autoUpdate="true" />
+				
+					<ui:panelGrid columns="3">
+						<h:outputLabel value="Nome"></h:outputLabel>
+							<ui:inputText id="nome" value="#{rubrica.contatto.nome}" required="true" requiredMessage="Nome obbligatorio">
+							</ui:inputText>
+							<ui:message for="nome"></ui:message>
+						<h:outputLabel value="Cognome"></h:outputLabel>
+							<ui:inputText id="cognome" value="#{rubrica.contatto.cognome}" required="true" requiredMessage="Cognome obbligatorio">
+							</ui:inputText>
+							<ui:message for="cognome"></ui:message>
+						<h:outputLabel value="Telefono"></h:outputLabel>
+							<ui:inputText id="telefono" value="#{rubrica.contatto.telefono}" required="true" requiredMessage="Telefono obbligatorio">
+							</ui:inputText>
+							<ui:message for="telefono"></ui:message>
+						<h:outputLabel value="Email"></h:outputLabel>
+							<ui:inputText  id="email" value="#{rubrica.contatto.email}">
+							</ui:inputText>
+							<ui:message for="email"></ui:message>
+					</ui:panelGrid>
+					
+					<ui:commandButton process="@([id$=inserimentoForm])" 
+					actionListener="#{rubrica.salva}" 
+					oncomplete="if(!args.validationFailed){ PF('inserimento').hide();} else {PF('inserimento').show();}" 
+					update="@([id$=tabella])" 
+					value="Salva contatto" ></ui:commandButton>
+				</ui:panel>
+			</ui:dialog>
+			
+			<ui:commandButton type="button" onclick="PF('inserimento').show();" value="Aggiungi contatto"></ui:commandButton>
+				
+		
+		
+		</h:form>
+	</h:body>	
+		
+</html>
