@@ -1,4 +1,4 @@
-# Rubrica2.0 📚📆
+# Rubrica2.0 📆📚
 
 Progetto e sviluppo di una rubrica telefonica in Java.
 
